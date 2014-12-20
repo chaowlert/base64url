@@ -1,8 +1,8 @@
 base64url
 =========
 
-Library for url-compatible base64 encoding/decoding
-
+Library for url-compatible base64 encoding/decoding. Base64 generated from this library is sortable, so it can be use as key.
+And there is no padding, so generated text is more clean.
 
 ####1. Basic encoding/decoding
 basic encoding/decoding from string
