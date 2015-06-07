@@ -89,7 +89,7 @@ namespace Base64Url
 
             for (int i = 0; i < size; i++)
             {
-                var pos = (7 - i) * 8;
+                var pos = (size - i - 1) * 8;
                 _bytes.Add((byte)(value >> pos));
             }
         }
