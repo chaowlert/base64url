@@ -17,10 +17,7 @@ namespace Base64Url
         }
 
         readonly List<byte> _bytes;
-        protected byte[] Bytes
-        {
-            get { return _bytes.ToArray(); }
-        }
+        protected byte[] Bytes => _bytes.ToArray();
 
         public void WriteVar(byte[] bytes)
         {
@@ -78,7 +75,7 @@ namespace Base64Url
         public void Write(DateTime date, long precisionTick = 1)
         {
             if (precisionTick <= 0)
-                throw new ArgumentOutOfRangeException("precisionTick");
+                throw new ArgumentOutOfRangeException(nameof(precisionTick));
 
             var value = date.Ticks / precisionTick;
             value <<= 2;

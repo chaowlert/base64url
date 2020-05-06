@@ -15,24 +15,18 @@ namespace Base64Url
             _bytes = bytes;
         }
 
-        public int Length
-        {
-            get { return _bytes.Length; }
-        }
+        public int Length => _bytes.Length;
 
         public int Position
         {
-            get { return _position; }
-            set { _position = value; }
+            get => _position;
+            set => _position = value;
         }
 
         public byte[] ReadVarBytes()
         {
             var length = ReadInt32();
-            var bytes = new byte[length];
-            Buffer.BlockCopy(_bytes, _position, bytes, 0, length);
-            _position += length;
-            return bytes;
+            return ReadBytes(length);
         }
 
         public string ReadVarString()
@@ -47,6 +41,14 @@ namespace Base64Url
         public byte ReadByte()
         {
             return _bytes[_position++];
+        }
+
+        public byte[] ReadBytes(int length)
+        {
+            var bytes = new byte[length];
+            Buffer.BlockCopy(_bytes, _position, bytes, 0, length);
+            _position += length;
+            return bytes;
         }
 
         public short ReadInt16()
@@ -91,14 +93,14 @@ namespace Base64Url
             for (var i = precisionTick << 2; i >= 256; i >>= 8)
                 size--;
 
-            long value = 0;
+            ulong value = 0;
             for (int i = 0; i < size; i++)
             {
                 value <<= 8;
                 value |= _bytes[_position++];
             }
             value >>= 2;
-            return new DateTime(value * precisionTick);
+            return new DateTime((long)value * precisionTick);
         }
 
         public string ReadBase64(int length)

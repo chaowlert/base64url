@@ -1,19 +1,25 @@
-using System.Web.Security;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace Base64Url
 {
     public class Base64Encryptor : Base64Writer
     {
-        readonly string[] _purposes;
-        public Base64Encryptor(params string[] purposes)
+        readonly ICryptoTransform _cryptoTransform;
+        public Base64Encryptor(ICryptoTransform cryptoTransform)
         {
-            _purposes = purposes;
+            _cryptoTransform = cryptoTransform;
         }
 
         public override string ToString()
         {
-            var encrypted = MachineKey.Protect(Bytes, _purposes);
-            return Base64.GetBase64(encrypted);
+            using (var byteStream = new MemoryStream())
+            using (var cryptoStream = new CryptoStream(byteStream, _cryptoTransform, CryptoStreamMode.Write))
+            {
+                cryptoStream.Write(Bytes, 0, Bytes.Length);
+                cryptoStream.FlushFinalBlock();
+                return Base64.GetBase64(byteStream.ToArray());
+            }
         }
     }
 }

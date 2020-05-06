@@ -1,16 +1,23 @@
-using System.Web.Security;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace Base64Url
 {
     public class Base64Decryptor : Base64Reader
     {
-        public Base64Decryptor(string encrypted, params string[] purposes) : 
-            base(Decrypt(encrypted, purposes)) { }
+        public Base64Decryptor(string encrypted, ICryptoTransform cryptoTransform) : 
+            base(Decrypt(encrypted, cryptoTransform)) { }
 
-        static byte[] Decrypt(string encrypted, string[] purposes)
+        static byte[] Decrypt(string encrypted, ICryptoTransform cryptoTransform)
         {
             var bytes = Base64.ToBytes(encrypted);
-            return MachineKey.Unprotect(bytes, purposes);
+            using (var source = new MemoryStream(bytes))
+            using (var cryptoStream = new CryptoStream(source, cryptoTransform, CryptoStreamMode.Read))
+            using (var target = new MemoryStream())
+            {
+                cryptoStream.CopyTo(target);
+                return target.ToArray();
+            }
         }
     }
 }

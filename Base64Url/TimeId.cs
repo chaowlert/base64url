@@ -6,10 +6,7 @@ namespace Base64Url
     {
         [ThreadStatic]
         private static Random _local;
-        static Random Random
-        {
-            get { return _local ?? (_local = new Random(Guid.NewGuid().GetHashCode())); }
-        }
+        static Random Random => _local ?? (_local = new Random(Guid.NewGuid().GetHashCode()));
 
         public static string NewSortableId(bool ascending = false)
         {

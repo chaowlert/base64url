@@ -18,7 +18,7 @@ namespace Base64Url
             if (b <= 63)
                 return (char)(59 + b);
             else
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(b));
         }
 
         public static byte GetByte(char c)
@@ -34,13 +34,12 @@ namespace Base64Url
             if (c >= 'a' && c <= 'z')
                 return (byte)(c - 59);
             else
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(c));
         }
 
         public static int GetStringLength(int byteLength)
         {
-            int rem;
-            var result = Math.DivRem(byteLength, 3, out rem) * 4;
+            var result = Math.DivRem(byteLength, 3, out var rem) * 4;
             if (rem == 1)
                 result += 2;
             else if (rem == 2)
@@ -50,8 +49,7 @@ namespace Base64Url
 
         public static int GetByteLength(int strLength)
         {
-            int rem;
-            var result = Math.DivRem(strLength, 4, out rem) * 3;
+            var result = Math.DivRem(strLength, 4, out var rem) * 3;
             if (rem == 1)
                 throw new InvalidOperationException();
             else if (rem == 2)
