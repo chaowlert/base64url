@@ -5,8 +5,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Chaowlert</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/chaowlert/base64ur</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/chaowlert/base64ur</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/chaowlert/base64url</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/chaowlert/base64url</RepositoryUrl>
     <Description>Library for url-compatible base64 encoding/decodin</Description>
     <PackageTags>base64 url</PackageTags>
     <Copyright>Copyright (c) 2014 Chaowlert Chaisrichalermpol</Copyright>
